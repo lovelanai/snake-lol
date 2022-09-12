@@ -1,11 +1,30 @@
+* {
+  transition: all 0.3s ease-in-out;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Burned&display=swap");
+
 .gameContainer {
   height: 100vh;
   width: 100vw;
-  background-color: cornflowerblue;
+  background-image: url("./assets/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.name {
+  font-family: "Rubik Burned", cursive;
+  font-size: 2rem;
+  font-weight: 600;
+  background-image: linear-gradient(60deg, #e21143, #ffb03a);
+  background-clip: text;
+  color: transparent;
+  text-align: center;
 }
 
 .gameContent {
@@ -13,10 +32,16 @@
   height: 80%;
   background-color: white;
   display: flex;
+  position: relative;
+  border: #e21143 1px solid;
 }
 
 .snakeArea {
   display: flex;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 100;
 }
 
 .jonerbroner {
@@ -33,6 +58,7 @@
   align-items: center;
   border-top: dashed orange 4px;
   border-bottom: dashed pink 3px;
+  outline: none;
 }
 
 .eyes {
@@ -94,4 +120,8 @@
   position: absolute;
   top: -5px;
   right: -10px;
+}
+
+.apple img {
+  height: 100%;
 }
