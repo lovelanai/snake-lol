@@ -1,13 +1,9 @@
-* {
-  transition: all 0.3s ease-in-out;
-}
-
-@import url("https://fonts.googleapis.com/css2?family=Rubik+Burned&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rye&display=swap");
 
 .gameContainer {
   height: 100vh;
   width: 100vw;
-  background-image: url("./assets/background.jpg");
+  background-image: url("./assets/wallpaper.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -18,22 +14,24 @@
 }
 
 .name {
-  font-family: "Rubik Burned", cursive;
-  font-size: 2rem;
-  font-weight: 600;
-  background-image: linear-gradient(60deg, #e21143, #ffb03a);
-  background-clip: text;
-  color: transparent;
+  font-family: "Rye", cursive;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: black;
   text-align: center;
+  background: #ffffff;
 }
 
 .gameContent {
   width: 80%;
   height: 80%;
   background-color: white;
+  background-image: url(./assets/grass.png);
   display: flex;
   position: relative;
-  border: #e21143 1px solid;
+  border: #e21143 10px solid;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .snakeArea {
@@ -42,22 +40,23 @@
   bottom: 10px;
   left: 10px;
   z-index: 100;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
 }
 
 .jonerbroner {
   display: flex;
   justify-content: flex-end;
-  background-color: green;
+  background-color: rgb(155, 10, 168);
   height: 2rem;
-  width: 8rem;
-  position: relative;
+
   border-bottom-left-radius: 100%;
   border-top-left-radius: 70%;
   border-bottom-right-radius: 100%;
   border-top-right-radius: 100%;
   align-items: center;
-  border-top: dashed orange 4px;
-  border-bottom: dashed pink 3px;
+  border-top: dashed rgb(255, 230, 0) 4px;
+  border-bottom: dashed rgb(192, 255, 214) 3px;
   outline: none;
 }
 
@@ -69,32 +68,32 @@
 }
 
 .left-eye {
-  width: 0.2rem;
-  height: 0.2rem;
-  background-color: black;
-  border-radius: 100%;
-  border: 0.1rem solid white;
-}
-
-.right-eye {
-  margin-top: 0.3rem;
-  width: 0.2rem;
-  height: 0.2rem;
+  width: 0.4rem;
+  height: 0.4rem;
   background-color: black;
   border-radius: 100%;
   border: 0.3rem solid white;
 }
 
+.right-eye {
+  margin-top: 0.3rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-color: black;
+  border-radius: 100%;
+  border: 0.5rem solid white;
+}
+
 .mun {
-  margin-bottom: 0.6rem;
-  width: 0.2rem;
-  height: 0.2rem;
+  margin-top: 0.6rem;
+  width: 0.4rem;
+  height: 0.4rem;
   background-color: pink;
   border-bottom-left-radius: 70%;
   border-top-left-radius: 50%;
   border-bottom-right-radius: 50%;
   border-top-right-radius: 80%;
-  border: 0.3rem solid red;
+  border: 0.4rem solid red;
   animation: mouth 1s ease-in-out infinite;
 }
 
@@ -114,9 +113,9 @@
 .face {
   display: flex;
   transform: rotate(62deg);
-  background: green;
+  background: rgb(155, 10, 168);
   border-radius: 1rem 1rem 2rem 4rem;
-  border: 2px solid darkolivegreen;
+  border: 2px solid rgb(134, 9, 146);
   position: absolute;
   top: -5px;
   right: -10px;
@@ -124,4 +123,10 @@
 
 .apple img {
   height: 100%;
+}
+
+.hitbox {
+  background: purple;
+  width: 1rem;
+  position: absolute;
 }
