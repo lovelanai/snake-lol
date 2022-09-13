@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
+import "./Canvas.css";
 import apple from "./assets/pngegg.png";
 import poopHouse from "./assets/poophouse.png";
+import pixelapple from "./assets/pixelapple.png";
+import Canvas from "./Canvas";
 
 function App() {
   const [snakePositionY, setSnakePositionY] = useState(0);
@@ -10,12 +13,20 @@ function App() {
   const [snakeWidth, setSnakeWidth] = useState(8);
   const [snakeHeight, setSnakeHeight] = useState(2);
   const [appleHit, setAppleHit] = useState(false);
-  const [applePositionX, setApplePositionX] = useState(100);
-  const [applePositionY, setApplePositionY] = useState(100);
+  const [applePositionX, setApplePositionX] = useState(400);
+  const [applePositionY, setApplePositionY] = useState(400);
   const [isSnakeFat, setIsSnakeFat] = useState(false);
   const [faceColor, setFaceColor] = useState("rgb(155, 10, 168)");
   const [bodyColor, setBodyColor] = useState("rgb(155, 10, 168)");
   const [pooped, setPooped] = useState(false);
+  const [toiletRotation, setToiletRotation] = useState(0);
+  const [die, setDie] = useState(false);
+  const [count, setCount] = useState(0);
+  const [poopHouseX, setPoopHouseX] = useState(0);
+  // new game
+  const newGame = () => {
+    window.location.reload();
+  };
 
   //Handle keydowns
   const handleKeyDown = (event) => {
@@ -30,6 +41,9 @@ function App() {
     }
     if (event.keyCode === 39) {
       left();
+    }
+    if (event.keyCode === 13) {
+      newGame();
     }
   };
 
@@ -60,7 +74,6 @@ function App() {
 
   useEffect(() => {
     ref.current.focus();
-    console.log(applePositionX, applePositionY);
 
     // snake cant go out left
     if (snakePositionX < 0) {
@@ -77,7 +90,7 @@ function App() {
     }
 
     // snake gets fat
-    if (snakeWidth > 20) {
+    if (snakeWidth > 14) {
       setIsSnakeFat(true);
     }
 
@@ -98,6 +111,7 @@ function App() {
     // collision between poophouse and snake
     if (isSnakeFat && snakePositionY >= 500 && snakePositionX <= 60) {
       setPooped(true);
+
       setSnakeWidth(8);
       console.log("jag sket");
     }
@@ -106,13 +120,17 @@ function App() {
     if (pooped & (snakeWidth < 10)) {
       setIsSnakeFat(false);
     }
+
     // Collision
     if (
-      (snakePositionX === applePositionX) &
-      (snakePositionY === applePositionY)
+      (snakePositionX >= applePositionX - 30) &
+      (snakePositionX <= applePositionX + 30) &
+      (snakePositionY >= applePositionY - 30) &
+      (snakePositionY <= applePositionY + 30)
     ) {
       setSnakeWidth(snakeWidth + 3);
       setAppleHit(true);
+      setCount(count + 1);
 
       let resultX = parseInt(Math.random() * 30) * 20;
       let resultY = parseInt(Math.random() * 30) * 20;
@@ -121,11 +139,23 @@ function App() {
       setApplePositionY(resultY);
     }
 
+    // snake dies
+    if (isSnakeFat & (snakeWidth > 2)) {
+      setDie(true);
+    }
+
+    //if snake is dead
+    if (die) {
+      setPoopHouseX(snakePositionX + -80);
+      setToiletRotation(180);
+      setSnakePositionY(200);
+      setSnakeRotation(180);
+
+      document.getElementById("toilet").classList.add("shaketoilet");
+    }
+
     // adds new apple
     renderAnotherApple();
-
-    console.log(snakePositionX + "X");
-    console.log(snakePositionY + "y");
   }, [
     snakePositionX,
     snakePositionY,
@@ -134,9 +164,10 @@ function App() {
     isSnakeFat,
     pooped,
     snakeWidth,
+    die,
+    count,
   ]);
 
-  let poopHouseX = "0";
   let poopHouseY = "0";
 
   const renderAnotherApple = () => {
@@ -149,53 +180,135 @@ function App() {
         Jånas the <br></br>parkour god snake
       </h1>
       <div className="gameContent">
-        {isSnakeFat ? (
+        <div className="counter">
+          <h1>{count}</h1>
+          <div style={{ height: "2rem" }}>
+            <img
+              style={{ height: "100%" }}
+              alt="pixelapple"
+              src={pixelapple}
+            ></img>
+          </div>
+        </div>
+        {die ? (
           <>
-            <div
-              style={{ top: `${poopHouseY}rem`, left: `${poopHouseX}rem` }}
-              className="poopHouse"
-            >
-              <img alt="poophouse" src={poopHouse}></img>
-            </div>
-            <div className="full">
-              <h1>SNAKE IS FULL</h1>
-              <p>USE TOILET!</p>
+            <div onKeyDown={newGame} className="dead">
+              <h1>GAME OVER</h1>
+              <p>SNAKE DEAD!</p>
+              <button onClick={newGame}>NEW GAME</button>
+              <p style={{ fontSize: ".5rem" }}>press enter</p>
             </div>
           </>
         ) : (
           <></>
         )}
-        <div className="snakeArea">
-          <div
-            className="hitbox"
-            style={{
-              bottom: `${snakePositionY}px`,
-              left: `${snakePositionX}px`,
-              rotate: `${snakeRotation}deg`,
-            }}
-          >
+        {isSnakeFat ? (
+          <>
             <div
-              className="jonerbroner"
-              ref={ref}
-              tabIndex={-1}
-              onKeyDown={handleKeyDown}
+              id="toilet"
               style={{
-                width: `${snakeWidth}rem`,
-                height: `${snakeHeight}rem`,
-                background: `${bodyColor}`,
+                top: `${poopHouseY}rem`,
+                left: `${poopHouseX}px`,
+                rotate: `${toiletRotation}deg`,
+                zIndex: "10",
+              }}
+              className="poopHouse"
+            >
+              <img alt="poophouse" src={poopHouse}></img>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+
+        {isSnakeFat & !die ? (
+          <div className="full">
+            <h1>SNAKE IS FULL</h1>
+            <p>USE TOILET!</p>
+          </div>
+        ) : (
+          <></>
+        )}
+
+        {die ? (
+          <>
+            <div
+              className="cont"
+              style={{
+                left: `${snakePositionX - 60}px`,
+                position: "absolute",
+                width: "7rem",
+                zIndex: "4",
               }}
             >
-              <div style={{ background: `${faceColor}` }} className="face">
-                {isSnakeFat ? <div className="svett"></div> : <></>}
-                <div className="eyes">
-                  <div className="left-eye"></div>
-                  <div className="right-eye"></div>
+              <Canvas />
+            </div>
+
+            <div className="snakeArea">
+              <div
+                className="hitbox"
+                style={{
+                  bottom: `${snakePositionY}px`,
+                  left: `${snakePositionX}px`,
+                  rotate: `${snakeRotation}deg`,
+                }}
+              >
+                <div
+                  className="jonerbronerdead"
+                  ref={ref}
+                  tabIndex={-1}
+                  onKeyDown={handleKeyDown}
+                  style={{ zIndex: "1" }}
+                >
+                  <div
+                    style={{ zIndex: "1", background: "gray" }}
+                    className="facedead"
+                  >
+                    {isSnakeFat ? <div className="svett"></div> : <></>}
+                    <div className="eyes">
+                      <div className="left-eyedead"></div>
+                      <div className="right-eyedead"></div>
+                    </div>
+                    <div className="mundead"></div>
+                  </div>
                 </div>
-                <div className="mun"></div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="snakeArea">
+            <div
+              className="hitbox"
+              style={{
+                bottom: `${snakePositionY}px`,
+                left: `${snakePositionX}px`,
+                rotate: `${snakeRotation}deg`,
+              }}
+            >
+              <div
+                className="jonerbroner"
+                ref={ref}
+                tabIndex={-1}
+                onKeyDown={handleKeyDown}
+                style={{
+                  width: `${snakeWidth}rem`,
+                  height: `${snakeHeight}rem`,
+                  background: `${bodyColor}`,
+                }}
+              >
+                <div style={{ background: `${faceColor}` }} className="face">
+                  {isSnakeFat ? <div className="svett"></div> : <></>}
+                  <div className="eyes">
+                    <div className="left-eye"></div>
+                    <div className="right-eye"></div>
+                  </div>
+                  <div className="mun"></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
+
         {appleHit ? (
           <></>
         ) : (

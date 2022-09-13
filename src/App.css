@@ -107,6 +107,18 @@
   animation: mouth 1s ease-in-out infinite;
 }
 
+.mundead {
+  margin-top: 0.6rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-color: pink;
+  border-bottom-left-radius: 70%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-top-right-radius: 80%;
+  border: 0.6rem solid red;
+}
+
 @keyframes mouth {
   0% {
     width: 0.2rem;
@@ -131,12 +143,35 @@
   right: -10px;
 }
 
+.face {
+  display: flex;
+  transform: rotate(62deg);
+
+  border-radius: 1rem 1rem 2rem 4rem;
+  border: 2px solid rgb(71, 71, 71);
+  position: absolute;
+  top: -5px;
+  right: -10px;
+}
+
 .apple img {
   height: 100%;
 }
 
 .apple {
   animation: bounce 1s ease-in-out infinite;
+  transition: none;
+}
+
+.counter {
+  color: white;
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 4rem;
 }
 
 @keyframes bounce {
@@ -154,6 +189,7 @@
 
 .hitbox {
   width: 1rem;
+
   position: absolute;
 }
 
@@ -185,8 +221,134 @@
 .poopHouse {
   position: absolute;
   height: 10rem;
+  transition-duration: 3s;
 }
 
 .poopHouse img {
   height: 100%;
+}
+
+.dead {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.dead h1 {
+  animation: blinker 2s linear infinite;
+  color: red;
+  -webkit-text-fill-color: black;
+  -webkit-text-stroke: 4px;
+}
+
+.dead button {
+  animation: blinker 0.5s linear infinite;
+  color: red;
+  background-color: yellow;
+  width: 6rem;
+  height: 2rem;
+}
+
+.left-eyedead {
+  width: 1rem;
+  height: 1rem;
+
+  border-radius: 100%;
+
+  background: linear-gradient(
+      to bottom,
+      transparent 35%,
+      rgb(0, 0, 0) 35%,
+      rgb(3, 2, 2) 65%,
+      transparent 65%
+    ),
+    linear-gradient(
+      to right,
+      transparent 35%,
+      rgb(0, 0, 0) 35%,
+      rgb(0, 0, 0) 65%,
+      transparent 65%
+    );
+  transform: rotate(30deg);
+}
+
+.right-eyedead {
+  width: 0.8rem;
+  height: 0.8rem;
+  transform: rotate(30deg);
+  border-radius: 100%;
+
+  background: linear-gradient(
+      to bottom,
+      transparent 35%,
+      rgb(0, 0, 0) 35%,
+      rgb(3, 2, 2) 65%,
+      transparent 65%
+    ),
+    linear-gradient(
+      to right,
+      transparent 35%,
+      rgb(0, 0, 0) 35%,
+      rgb(0, 0, 0) 65%,
+      transparent 65%
+    );
+}
+
+.facedead {
+  display: flex;
+  transform: rotate(62deg);
+
+  border-radius: 1rem 1rem 2rem 4rem;
+  border: 2px solid rgb(91, 91, 91);
+  position: absolute;
+  top: -5px;
+  right: -10px;
+}
+
+@keyframes die {
+  0% {
+    width: 18rem;
+    height: 4rem;
+  }
+
+  100% {
+    width: 5rem;
+    height: 1rem;
+  }
+}
+
+.jonerbronerdead {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom-left-radius: 100%;
+  border-top-left-radius: 70%;
+  border-bottom-right-radius: 100%;
+  border-top-right-radius: 100%;
+  align-items: center;
+  border-top: dashed rgb(216, 216, 216) 4px;
+  border-bottom: dashed rgb(166, 166, 166) 3px;
+  outline: none;
+  background-color: gray;
+  animation: die 2s ease-in-out forwards;
+}
+
+.shaketoilet {
+  animation: shake 0.2s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes shake {
+  0% {
+    top: 4rem;
+  }
+
+  50% {
+    top: 7rem;
+  }
+
+  100% {
+    top: 4rem;
+  }
 }
