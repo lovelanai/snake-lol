@@ -164,11 +164,11 @@
 
 .counter {
   background: rgba(255, 255, 255, 0.453);
-  padding: 0 1rem;
+
   color: white;
   position: absolute;
   top: 0;
-  right: 2rem;
+
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -190,7 +190,6 @@
 
 .hitbox {
   width: 1rem;
-
   position: absolute;
 }
 

@@ -98,6 +98,12 @@ function App() {
       setSnakePositionY(700);
     }
 
+    const elementPosition = document.getElementById("snake");
+    const snakePositionRight = elementPosition.style.right;
+    const snakePositionLeft = elementPosition.style.left;
+    console.log(snakePositionRight + "right");
+    console.log(snakePositionLeft + "left");
+
     // snake gets fat
     if (snakeWidth > 16) {
       setIsSnakeFat(true);
@@ -221,6 +227,8 @@ function App() {
 
   let poopHouseY = "0";
 
+  let counterposition = "0";
+
   const renderAnotherApple = () => {
     setAppleHit(false);
   };
@@ -240,7 +248,7 @@ function App() {
         <div className="counter">
           <h1>{count}</h1>
 
-          <div style={{ height: "2rem" }}>
+          <div style={{ height: "2rem", right: `${counterposition}` }}>
             <img
               style={{ height: "100%" }}
               alt="pixelapple"
@@ -336,6 +344,7 @@ function App() {
         ) : (
           <div className="snakeArea">
             <div
+              id="snake"
               className="hitbox"
               style={{
                 bottom: `${snakePositionY}px`,
