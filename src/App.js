@@ -9,6 +9,9 @@ function App() {
   const [snakeRotation, setSnakeRotation] = useState(0);
   const [snakeWidth, setSnakeWidth] = useState(8);
   const [appleHit, setAppleHit] = useState(false);
+  const [applePositionX, setApplePositionX] = useState(100);
+  const [applePositionY, setApplePositionY] = useState(100);
+  const [isSnakeFat, setIsSnakeFat] = useState(false);
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 38) {
@@ -54,9 +57,8 @@ function App() {
 
   useEffect(() => {
     ref.current.focus();
-    collision();
-    console.log(snakePositionY);
-    console.log(snakePositionX);
+    console.log(applePositionX, applePositionY);
+
     if (snakePositionX < 0) {
       setSnakePositionX(0);
     }
@@ -67,6 +69,7 @@ function App() {
     if (snakePositionY < -100) {
       setSnakePositionY(700);
     }
+    collision();
   }, [snakePositionX, snakePositionY]);
 
   const collision = () => {
@@ -79,13 +82,25 @@ function App() {
     ) {
       setSnakeWidth(snakeWidth + 3);
       setAppleHit(true);
+
+      let max = 1000 / 20 + 1;
+      let resultX = parseInt(Math.random() * 30) * 20;
+      let resultY = parseInt(Math.random() * 30) * 20;
+
+      //randomMultiple = random - (random % 20);
+
+      setApplePositionX(resultX);
+      setApplePositionY(resultY);
+
       console.log("fetare");
     }
+    renderAnotherApple();
   };
 
-  const applePositionX = 100;
-
-  const applePositionY = 100;
+  const renderAnotherApple = () => {
+    setAppleHit(false);
+    /* collision(); */
+  };
 
   return (
     <div className="gameContainer">
@@ -128,7 +143,6 @@ function App() {
               position: "absolute",
               bottom: `${applePositionY}px`,
               left: `${applePositionX}px`,
-              background: "blue",
             }}
             className="apple"
           >
