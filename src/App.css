@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Rye&display=swap");
 
+* {
+  transition: all 0.1s ease-in-out;
+}
+
 .gameContainer {
   height: 100vh;
   width: 100vw;
@@ -32,6 +36,8 @@
   border: #e21143 10px solid;
   overflow-x: hidden;
   overflow-y: hidden;
+  justify-content: center;
+  align-items: center;
 }
 
 .snakeArea {
@@ -47,9 +53,6 @@
 .jonerbroner {
   display: flex;
   justify-content: flex-end;
-  background-color: rgb(155, 10, 168);
-  height: 2rem;
-
   border-bottom-left-radius: 100%;
   border-top-left-radius: 70%;
   border-bottom-right-radius: 100%;
@@ -58,6 +61,13 @@
   border-top: dashed rgb(255, 230, 0) 4px;
   border-bottom: dashed rgb(192, 255, 214) 3px;
   outline: none;
+}
+
+.svett {
+  background-color: aqua;
+  border-bottom-left-radius: 100%;
+  height: 0.5rem;
+  width: 0.5rem;
 }
 
 .eyes {
@@ -113,7 +123,7 @@
 .face {
   display: flex;
   transform: rotate(62deg);
-  background: rgb(155, 10, 168);
+
   border-radius: 1rem 1rem 2rem 4rem;
   border: 2px solid rgb(134, 9, 146);
   position: absolute;
@@ -143,7 +153,40 @@
 }
 
 .hitbox {
-  background: purple;
   width: 1rem;
   position: absolute;
+}
+
+.full {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.full h1 {
+  animation: blinker 0.5s linear infinite;
+  color: red;
+  -webkit-text-fill-color: yellow;
+  -webkit-text-stroke: 4px;
+}
+
+.full p {
+  color: rgb(255, 255, 255);
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.poopHouse {
+  position: absolute;
+  height: 10rem;
+}
+
+.poopHouse img {
+  height: 100%;
 }
