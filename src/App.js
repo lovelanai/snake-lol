@@ -7,6 +7,11 @@ import pixelapple from "./assets/pixelapple.png";
 import Canvas from "./Canvas";
 import crown from "./assets/crown.png";
 import joint from "./assets/joint.gif";
+import cow from "./assets/cow.png";
+import grass from "./assets/grass.png";
+import dirt from "./assets/dirt.png";
+import heaven from "./assets/heaven.png";
+import morgue from "./assets/morgue.jpg";
 
 function App() {
   const [snakePositionY, setSnakePositionY] = useState(0);
@@ -26,6 +31,7 @@ function App() {
   const [count, setCount] = useState(0);
   const [poopHouseX, setPoopHouseX] = useState(0);
   const [snakeWin, setSnakeWin] = useState(false);
+  const [backgroundImage, setBackgroundImage] = useState(dirt);
   // new game
   const newGame = () => {
     window.location.reload();
@@ -93,7 +99,7 @@ function App() {
     }
 
     // snake gets fat
-    if (snakeWidth > 14) {
+    if (snakeWidth > 16) {
       setIsSnakeFat(true);
     }
 
@@ -109,6 +115,11 @@ function App() {
       setFaceColor("red");
       setBodyColor("red");
       setSnakeHeight(4);
+
+      let faceid = document.getElementById("face");
+      if (faceid) {
+        faceid.classList.add("fatsnake");
+      }
     }
 
     // collision between poophouse and snake
@@ -122,6 +133,11 @@ function App() {
     // emptying snake
     if (pooped & (snakeWidth < 10)) {
       setIsSnakeFat(false);
+
+      let faceid = document.getElementById("face");
+      if (faceid) {
+        faceid.classList.remove("fatsnake");
+      }
     }
     if (pooped & (snakeWidth < 10) & (count > 9)) {
       setBodyColor("linear-gradient(rgb(137 40 3), rgb(114 85 23))");
@@ -131,7 +147,7 @@ function App() {
       setBodyColor("linear-gradient(#70706F, #BEC0C2)");
       setFaceColor("linear-gradient(#70706F, #BEC0C2)");
     }
-    if (pooped & (snakeWidth < 10) & (count > 29)) {
+    if (pooped & (snakeWidth < 10) & (count > 30)) {
       setBodyColor("linear-gradient(#A57C01, #EDCB01, #DBB701)");
       setFaceColor("linear-gradient(#A57C01, #EDCB01, #DBB701)");
     }
@@ -167,21 +183,25 @@ function App() {
       setSnakeRotation(180);
 
       document.getElementById("toilet").classList.add("shaketoilet");
+      setBackgroundImage(morgue);
     }
 
     if ((count > 9) & !isSnakeFat) {
       setBodyColor("linear-gradient(rgb(137 40 3), rgb(114 85 23))");
       setFaceColor("linear-gradient(rgb(137 40 3), rgb(114 85 23)");
+      setBackgroundImage(grass);
     }
 
     if ((count > 19) & !isSnakeFat) {
       setBodyColor("linear-gradient(#70706F, #BEC0C2)");
       setFaceColor("linear-gradient(#70706F, #BEC0C2)");
+      setBackgroundImage(cow);
     }
 
-    if ((count > 1) & !isSnakeFat) {
+    if ((count > 30) & !isSnakeFat) {
       setBodyColor("linear-gradient(#A57C01, #EDCB01, #DBB701)");
       setFaceColor("linear-gradient(#A57C01, #EDCB01, #DBB701)");
+      setBackgroundImage(heaven);
       setSnakeWin(true);
     }
 
@@ -210,9 +230,16 @@ function App() {
       <h1 className="name">
         Jånas the <br></br>parkour god snake
       </h1>
-      <div className="gameContent">
+      <div
+        className="gameContent"
+        style={{
+          backgroundImage: "url(" + backgroundImage + ")",
+          backgroundSize: "cover",
+        }}
+      >
         <div className="counter">
           <h1>{count}</h1>
+
           <div style={{ height: "2rem" }}>
             <img
               style={{ height: "100%" }}
@@ -327,7 +354,11 @@ function App() {
                   background: `${bodyColor}`,
                 }}
               >
-                <div style={{ background: `${faceColor}` }} className="face">
+                <div
+                  style={{ background: `${faceColor}` }}
+                  className="face"
+                  id="face"
+                >
                   {snakeWin ? (
                     <>
                       <div className="crown">
@@ -360,7 +391,7 @@ function App() {
           </div>
         )}
 
-        {appleHit ? (
+        {appleHit || snakeWin ? (
           <></>
         ) : (
           <div
