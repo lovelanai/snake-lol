@@ -5,6 +5,8 @@ import apple from "./assets/pngegg.png";
 import poopHouse from "./assets/poophouse.png";
 import pixelapple from "./assets/pixelapple.png";
 import Canvas from "./Canvas";
+import crown from "./assets/crown.png";
+import joint from "./assets/joint.gif";
 
 function App() {
   const [snakePositionY, setSnakePositionY] = useState(0);
@@ -23,6 +25,7 @@ function App() {
   const [die, setDie] = useState(false);
   const [count, setCount] = useState(0);
   const [poopHouseX, setPoopHouseX] = useState(0);
+  const [snakeWin, setSnakeWin] = useState(false);
   // new game
   const newGame = () => {
     window.location.reload();
@@ -116,9 +119,21 @@ function App() {
       console.log("jag sket");
     }
 
-    // emtying snake
+    // emptying snake
     if (pooped & (snakeWidth < 10)) {
       setIsSnakeFat(false);
+    }
+    if (pooped & (snakeWidth < 10) & (count > 9)) {
+      setBodyColor("linear-gradient(rgb(137 40 3), rgb(114 85 23))");
+      setFaceColor("linear-gradient(rgb(137 40 3), rgb(114 85 23)");
+    }
+    if (pooped & (snakeWidth < 10) & (count > 19)) {
+      setBodyColor("linear-gradient(#70706F, #BEC0C2)");
+      setFaceColor("linear-gradient(#70706F, #BEC0C2)");
+    }
+    if (pooped & (snakeWidth < 10) & (count > 29)) {
+      setBodyColor("linear-gradient(#A57C01, #EDCB01, #DBB701)");
+      setFaceColor("linear-gradient(#A57C01, #EDCB01, #DBB701)");
     }
 
     // Collision
@@ -140,7 +155,7 @@ function App() {
     }
 
     // snake dies
-    if (isSnakeFat & (snakeWidth > 2)) {
+    if (isSnakeFat & (snakeWidth > 18)) {
       setDie(true);
     }
 
@@ -152,6 +167,22 @@ function App() {
       setSnakeRotation(180);
 
       document.getElementById("toilet").classList.add("shaketoilet");
+    }
+
+    if ((count > 9) & !isSnakeFat) {
+      setBodyColor("linear-gradient(rgb(137 40 3), rgb(114 85 23))");
+      setFaceColor("linear-gradient(rgb(137 40 3), rgb(114 85 23)");
+    }
+
+    if ((count > 19) & !isSnakeFat) {
+      setBodyColor("linear-gradient(#70706F, #BEC0C2)");
+      setFaceColor("linear-gradient(#70706F, #BEC0C2)");
+    }
+
+    if ((count > 1) & !isSnakeFat) {
+      setBodyColor("linear-gradient(#A57C01, #EDCB01, #DBB701)");
+      setFaceColor("linear-gradient(#A57C01, #EDCB01, #DBB701)");
+      setSnakeWin(true);
     }
 
     // adds new apple
@@ -297,6 +328,26 @@ function App() {
                 }}
               >
                 <div style={{ background: `${faceColor}` }} className="face">
+                  {snakeWin ? (
+                    <>
+                      <div className="crown">
+                        <img
+                          style={{ height: "100%" }}
+                          src={crown}
+                          alt="crown"
+                        ></img>
+                      </div>
+                      <div className="joint">
+                        <img
+                          style={{ height: "100%" }}
+                          src={joint}
+                          alt="joint"
+                        ></img>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                   {isSnakeFat ? <div className="svett"></div> : <></>}
                   <div className="eyes">
                     <div className="left-eye"></div>

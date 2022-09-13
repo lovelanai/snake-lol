@@ -352,3 +352,18 @@
     top: 4rem;
   }
 }
+
+.crown {
+  height: 2rem;
+  position: absolute;
+  transform: rotate(274deg);
+  left: -2rem;
+}
+
+.joint {
+  height: 11rem;
+  position: absolute;
+  top: -2.3rem;
+  left: -4.6rem;
+  transform: rotate(338deg);
+}
