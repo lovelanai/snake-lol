@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
-import { useRef, useEffect, useState } from "react";
 import apple from "./assets/pngegg.png";
 import poopHouse from "./assets/poophouse.png";
 
@@ -18,6 +17,7 @@ function App() {
   const [bodyColor, setBodyColor] = useState("rgb(155, 10, 168)");
   const [pooped, setPooped] = useState(false);
 
+  //Handle keydowns
   const handleKeyDown = (event) => {
     if (event.keyCode === 38) {
       up();
@@ -25,36 +25,34 @@ function App() {
     if (event.keyCode === 40) {
       down();
     }
-
     if (event.keyCode === 37) {
       right();
     }
-
     if (event.keyCode === 39) {
       left();
     }
   };
 
+  //Moves snake up
   const up = () => {
     setSnakePositionY(snakePositionY + 20);
     setSnakeRotation(-270);
   };
-
+  //Moves snake down
   const down = () => {
     setSnakePositionY(snakePositionY + -20);
 
     setSnakeRotation(270);
   };
-
+  //Moves snake left
   const left = () => {
     setSnakePositionX(snakePositionX + 20);
 
     setSnakeRotation(180);
   };
-
+  //Moves snake right
   const right = () => {
     setSnakePositionX(snakePositionX - 20);
-
     setSnakeRotation(0);
   };
 
@@ -64,53 +62,51 @@ function App() {
     ref.current.focus();
     console.log(applePositionX, applePositionY);
 
+    // snake cant go out left
     if (snakePositionX < 0) {
       setSnakePositionX(0);
     }
 
+    // snake goes around Y axle
     if (snakePositionY > 760) {
       setSnakePositionY(-20);
     }
+
     if (snakePositionY < -100) {
       setSnakePositionY(700);
     }
 
+    // snake gets fat
     if (snakeWidth > 10) {
       setIsSnakeFat(true);
     }
 
+    // if snake isn't fat
     if (!isSnakeFat) {
       setFaceColor("rgb(155, 10, 168)");
       setBodyColor("rgb(155, 10, 168)");
       setSnakeHeight(2);
     }
 
+    // if snake is fat
     if (isSnakeFat) {
       setFaceColor("red");
       setBodyColor("red");
       setSnakeHeight(4);
     }
 
+    // collision between poophouse and snake
     if (isSnakeFat && snakePositionY >= 500 && snakePositionX <= 60) {
       setPooped(true);
       setSnakeWidth(8);
       console.log("jag sket");
     }
 
+    // emtying snake
     if (pooped & (snakeWidth < 10)) {
       setIsSnakeFat(false);
     }
-
-    collision();
-
-    console.log(snakePositionX + "X");
-    console.log(snakePositionY + "y");
-  }, [snakePositionX, snakePositionY]);
-
-  let poopHouseX = "0";
-  let poopHouseY = "0";
-
-  const collision = () => {
+    // Collision
     if (
       (snakePositionX === applePositionX) &
       (snakePositionY === applePositionY)
@@ -124,9 +120,24 @@ function App() {
       setApplePositionX(resultX);
       setApplePositionY(resultY);
     }
+
+    // adds new apple
     renderAnotherApple();
-    /* if */
-  };
+
+    console.log(snakePositionX + "X");
+    console.log(snakePositionY + "y");
+  }, [
+    snakePositionX,
+    snakePositionY,
+    applePositionX,
+    applePositionY,
+    isSnakeFat,
+    pooped,
+    snakeWidth,
+  ]);
+
+  let poopHouseX = "0";
+  let poopHouseY = "0";
 
   const renderAnotherApple = () => {
     setAppleHit(false);
@@ -144,7 +155,7 @@ function App() {
               style={{ top: `${poopHouseY}rem`, left: `${poopHouseX}rem` }}
               className="poopHouse"
             >
-              <img src={poopHouse}></img>
+              <img alt="poophouse" src={poopHouse}></img>
             </div>
             <div className="full">
               <h1>SNAKE IS FULL</h1>
@@ -197,7 +208,7 @@ function App() {
             }}
             className="apple"
           >
-            <img src={apple}></img>
+            <img alt="apple" src={apple}></img>
           </div>
         )}
       </div>
