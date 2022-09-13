@@ -77,7 +77,7 @@ function App() {
     }
 
     // snake gets fat
-    if (snakeWidth > 10) {
+    if (snakeWidth > 20) {
       setIsSnakeFat(true);
     }
 
