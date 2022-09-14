@@ -98,11 +98,11 @@ function App() {
       setSnakePositionY(700);
     }
 
-    const elementPosition = document.getElementById("snake");
-    const snakePositionRight = elementPosition.style.right;
-    const snakePositionLeft = elementPosition.style.left;
-    console.log(snakePositionRight + "right");
-    console.log(snakePositionLeft + "left");
+    // const elementPosition = document.getElementById("snake");
+    // // const snakePositionRight = elementPosition.style.right;
+    // // const snakePositionLeft = elementPosition.style.left;
+    // console.log(snakePositionRight + "right");
+    // console.log(snakePositionLeft + "left");
 
     // snake gets fat
     if (snakeWidth > 16) {
